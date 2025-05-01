@@ -1,48 +1,76 @@
-<main class="flex-grow flex flex-col w-full py-5 sm:py-16  md:mt-14 items-center justify-center">
+<main class="flex-grow flex flex-col w-[100%] py-5 sm:py-16   md:mt-14 items-center justify-center">
 
  
-    <div class="w-[85%] md:w-full max-w-md bg-white p-14 rounded-3xl bg-opacity-90 px-4 ">
+    <div class="w-[100%] md:w-full max-w-xl bg-white p-14 py-14 rounded-3xl bg-opacity-90  px-4 ">
       <h2 class="text-center text-red-600 text-5xl sm:text-4xl font-semibold mb-6 tracking-widest leading-7">LOGIN</h2>
-      <form class="space-y-4 px-7 " (ngSubmit)="login()">
-        <div class="flex my-2 items-center  bg-gray-100 rounded-l-lg rounded-r-full border border-gray-300 px-2">
-          <label for="username" class="whitespace-nowrap text-sm text-gray-600 mr-2">Username</label>
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="space-y-4 px-7">
+        <div class="flex my-2 items-center bg-gray-100 rounded-lg border border-gray-300">
+          <label for="username" class="px-2 whitespace-nowrap text-sm text-gray-600 mr-2">Username</label>
           <input
             id="username"
-            type="text"
-            class="w-full  px-3 py-2 bg-transparent border rounded-md border-l-gray-300 bg-white focus:outline-none text-sm"
+            type="email"
+            formControlName="username"
+            class="w-full px-3 py-2 bg-transparent border border-l-gray-300 bg-white focus:outline-none text-sm"
             placeholder="Enter your username"
-            name="username"
-            required
           />
+        
         </div>
-  
-        <div class="flex items-center my-2 bg-gray-100 rounded-l-lg rounded-r-full border border-gray-300 px-2">
-          <label for="password" class="whitespace-nowrap text-sm text-gray-600 mr-2">Password</label>
-          <input
-            id="password"
-            type="password"
-            class="w-full  px-3 py-2 bg-transparent border rounded-md border-l-gray-300 bg-white focus:outline-none text-sm"
-            placeholder="Enter your password"
-            name="password"
-            required
-          />
+        <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+        class="text-red-500 text-sm ">
+        Username is required
+    </div>
+        <div class="flex items-center my-2 bg-gray-100 rounded-lg border border-gray-300">
+          <label for="password" class="px-2 whitespace-nowrap text-sm text-gray-600 mr-2">Password</label>
+          <div class="relative w-full">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              class="w-full px-3 py-2 bg-transparent border border-l-gray-300 bg-white focus:outline-none text-sm"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              (click)="togglePassword()"
+              class="absolute inset-y-0 right-2 flex items-center text-sm text-gray-600"
+            >
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+        
         </div>
-  
-        <button type="submit" class="w-full mt-3 bg-red-600 rounded-lg text-white py-2  hover:bg-red-700 transition duration-200" (click)="login()">
+     
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+      class="text-red-500 text-sm  ">
+      Password is required
+  </div>
+        <button
+          type="submit"
+          class="w-full mt-3 bg-red-600 rounded-lg text-white py-2 hover:bg-red-700 transition duration-200"
+        >
           Login
         </button>
       </form>
+
   
       <div class="text-right mt-2">
         <a href="#" class="text-sm text-red-600 hover:underline">Forgot password? Click here.</a>
       </div>
   
       <p class="text-xs text-center text-gray-700 mt-6">
+
+        
         <strong>WARNING:</strong> Unauthorized access or misuse of any data may result in disciplinary, civil
         penalties, and/or criminal prosecution.
       </p>
-    </div>
 
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+      class="text-red-500 text-sm text-center ">
+      Password is required
+  </div>
+   
+ 
+</div>
 
 
 
